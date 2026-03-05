@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <!-- Обязательный тег для мобильных устройств -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на 18-летие</title>
+    
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <style>
+        body {
+            background-color: #FF85F3;
+            font-family: 'Anonymous Pro', monospace;
+            color: white;
+            margin: 0;
+            padding: 15px; /* Уменьшили отступы по краям */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            overflow-x: hidden; /* Защита от горизонтальной прокрутки */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 350px; /* Идеальная ширина для большинства смартфонов */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Адаптивные изображения */
+        img {
+            max-width: 100%; /* Фото не вылезет за пределы экрана */
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Легкая тень для стиля */
+        }
+
+        /* Текст */
+        .text-block {
+            width: 100%;
+            font-size: 20px;
+            line-height: 1.3;
+            word-wrap: break-word;
+        }
+
+        /* Карта */
+        iframe {
+            width: 100%;
+            height: 300px;
+            border-radius: 20px;
+            border: none;
+        }
+
+        /* Палитра */
+        .color-palette {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .color-circle {
+            width: 35px; /* Чуть меньше для мобильных */
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* Форма ввода */
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        input {
+            width: 100%;
+            box-sizing: border-box; /* Чтобы padding не увеличивал ширину */
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            font-family: 'Anonymous Pro';
+            font-weight: bold;
+            background-color: white;
+            color: #FF85F3;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        
+        .success-msg {
+            background: #a84a9f;
+            padding: 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="text-block">Приглашаю вас на мой день рождения</div>
+    <img src="{% static 'foto/photo_2026-03-05_17-39-06.jpg' %}" alt="Фото">
+
+    <div class="text-block">Мне 18 лет</div>
+    <img src="{% static 'foto/photo_2026-03-05_17-41-02.jpg' %}" alt="Фото">
+
+    <div class="text-block">Дата: 31 марта</div>
+    <img src="{% static 'foto/photo_2026-03-05_17-41-12.jpg' %}" alt="Фото">
+
+    <div class="text-block">Время: 18:00</div>
+    <img src="{% static 'foto/photo_2026-03-05_17-41-14.jpg' %}" alt="Фото">
+
+    <div class="text-block">Место:</div>
+    <iframe src="https://yandex.ru"></iframe>
+
+    <img src="{% static 'foto/photo_2026-03-05_17-41-07.jpg' %}" alt="Фото">
+
+    <div class="text-block">Дресс-код: нарядный, исключая спортивный стиль. Выбирай элегантность и комфорт.</div>
+    
+    <div>
+        Цветовая гамма:
+        <div class="color-palette">
+            <div class="color-circle" style="background: #ffffff;"></div>
+            <div class="color-circle" style="background: black;"></div>
+            <div class="color-circle" style="background: #FF009D;"></div>
+            <div class="color-circle" style="background: #4BE6F8;"></div>
+            <div class="color-circle" style="background: #737373;"></div>
+        </div>
+    </div>
+
+    <img src="{% static 'foto/photo_2026-03-05_17-41-16.jpg' %}" alt="Фото">
+
+    <div class="text-block">Прошу подтвердить присутствие до 20 марта</div>
+    <img src="{% static 'foto/photo_2026-03-05_17-41-05.jpg' %}" alt="Фото">
+
+    <div class="text-block">По всем вопросам писать в чат или лс</div>
+    <img src="{% static 'foto/photo_2026-03-05_17-41-19.jpg' %}" alt="Фото">
+
+    {% if success %}
+        <div class="success-msg">🎉 Спасибо! Ваше присутствие подтверждено.</div>
+    {% else %}
+        <form method="POST" action="{% url 'articles:article_list' %}">
+            {% csrf_token %}
+            <input type="text" name="guest_name" placeholder="Введите ваше имя" required>
+            <button type="submit">Подтвердить</button>
+        </form>
+    {% endif %}
+
+    <div class="text-block" style="padding-bottom: 40px;">До встречи на лучшем событии года!</div>
+</div>
+
+</body>
+</html>
